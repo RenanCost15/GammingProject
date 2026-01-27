@@ -9,7 +9,7 @@ export const fetchGames = cache(async (filters) => {
   const queryString = new URLSearchParams({
     key: apiKey,
     search: filters.sName || '',
-    dates: filters.sDates || '1900-01-01,9999-12-31',
+    dates: filters.sDates || '1900-01-01 / 9999-12-31',
     ordering: filters.sOrdering || '',
     page: filters.sPage || 1,
     page_size: 12,

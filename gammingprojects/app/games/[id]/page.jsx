@@ -38,7 +38,7 @@ export default async function GameDetails({ params }) {
       </div>
       <div className="text-center mt-8">
         <Link href="/games">
-          <button className="px-6 py-2 bg-taupe rounded-full text-white font-semibold hover:bg-charcoal hover:scale-105">Back</button>
+          <button className="px-6 py-2 bg-silver rounded-full text-white font-semibold hover:bg-charcoal hover:scale-105">Back</button>
         </Link>
       </div>
     </div>

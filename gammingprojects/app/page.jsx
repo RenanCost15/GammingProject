@@ -1,26 +1,38 @@
 export default function Home() {
   return (
-    <div className="bg-gradient-to-b from-darkOpacityS via-grayDarkOpacityMd to-darkOpacityS min-h-screen flex items-center justify-center py-10 px-6">
-      <div className="text-center text-light space-y-6">
-        <h1 className="text-4xl font-semibold text-charcoal">
-          Welcome to MorphGames MG!
+    <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-darkOpacityS via-grayDarkOpacityMd to-darkOpacityS px-6 py-12 overflow-hidden">
+      
+      {/* Glow decorativo */}
+      <div className="absolute -top-32 -left-32 w-96 h-96 bg-silver/20 rounded-full blur-3xl" />
+      <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-charcoal/30 rounded-full blur-3xl" />
+
+      <div className="relative max-w-3xl text-center space-y-8">
+        
+        <h1 className="text-4xl md:text-5xl font-bold text-light tracking-tight">
+          Welcome to{" "}
+          <span className="text-silver">MorphGames MG</span>
         </h1>
-        <p className="text-lg text-grayLight">
+
+        <p className="text-lg md:text-xl text-grayLight">
           Your journey into the world of games starts here.
         </p>
-        <p className="text-sm text-grayMedium">
-          Explore games, platforms, developers, and much more!
+
+        <p className="text-sm md:text-base text-grayMedium">
+          Explore games, platforms, developers, and everything that makes the
+          gaming universe amazing.
         </p>
-        <div className="space-x-4">
+
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
           <a
             href="/games"
-            className="inline-block px-6 py-3 mt-6 bg-taupe text-light font-semibold rounded-full transform transition-all hover:scale-105 hover:bg-charcoal"
+            className="px-8 py-3 bg-silver text-light font-semibold rounded-full shadow-lg transition-all duration-300 hover:scale-105 hover:bg-charcoal"
           >
             Start Exploring
           </a>
+
           <a
             href="/about"
-            className="inline-block px-6 py-3 mt-6 bg-taupe text-light font-semibold rounded-full transform transition-all hover:scale-105 hover:bg-charcoal"
+            className="px-8 py-3 border border-grayMedium text-light font-semibold rounded-full transition-all duration-300 hover:bg-light hover:text-darkOpacityS"
           >
             Learn More
           </a>
