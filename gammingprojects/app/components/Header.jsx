@@ -6,7 +6,6 @@ export default function Header() {
     <header className="bg-grayDark text-grayLight py-4 shadow-lg">
       <div className="container mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
 
-        {/* Logo + Brand */}
         <Link
           href="/"
           className="flex items-center gap-3 text-3xl font-bold hover:text-white transition-colors duration-300"
@@ -24,7 +23,6 @@ export default function Header() {
           </span>
         </Link>
 
-        {/* Navigation */}
         <nav className="flex flex-wrap justify-center sm:justify-end gap-4">
           {[
             { href: "/", label: "Home" },

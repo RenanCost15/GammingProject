@@ -2,7 +2,6 @@ export default function Home() {
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-darkOpacityS via-grayDarkOpacityMd to-darkOpacityS px-6 py-12 overflow-hidden">
       
-      {/* Glow decorativo */}
       <div className="absolute -top-32 -left-32 w-96 h-96 bg-silver/20 rounded-full blur-3xl" />
       <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-charcoal/30 rounded-full blur-3xl" />
 
