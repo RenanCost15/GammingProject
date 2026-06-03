@@ -1,12 +1,11 @@
 {
-  "name": "gammingprojectss",
-  "version": "0.1.0",
+  "name": "redcore-games",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "next start"
   },
   "dependencies": {
     "autoprefixer": "^10.4.20",
@@ -19,5 +18,11 @@
   "devDependencies": {
     "postcss": "^8.5.1",
     "tailwindcss": "^3.4.17"
-  }
+  },
+  "author": "Renan Costa",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RenanCost15/redcore-games.git"
+  },
+  "homepage": "https://github.com/RenanCost15"
 }

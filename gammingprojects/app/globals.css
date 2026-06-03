@@ -1,3 +1,127 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+  --color-abyss: #050505;
+  --color-onyx: #0b0b0f;
+  --color-graphite: #14141b;
+  --color-carbon: #1e1e27;
+  --color-blood: #e50914;
+  --color-crimson: #ff1e2d;
+  --color-ember: #ff4d4d;
+  --color-smoke: #a7a7b3;
+  --color-ash: #d6d6de;
+  --color-frost: #ffffff;
+  --surface-soft: rgba(255, 255, 255, 0.045);
+  --surface-strong: rgba(0, 0, 0, 0.35);
+  --border-soft: rgba(255, 255, 255, 0.1);
+  --shadow-neon: 0 0 35px rgba(229, 9, 20, 0.35);
+  --shadow-card: 0 24px 60px rgba(0, 0, 0, 0.45);
+  --background-radial: radial-gradient(circle at top, rgba(229, 9, 20, 0.35), transparent 35%);
+  --selection-bg: #e50914;
+  --selection-text: #ffffff;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+  --color-abyss: #f4f8ff;
+  --color-onyx: #ffffff;
+  --color-graphite: #ffffff;
+  --color-carbon: #e8f1ff;
+  --color-blood: #0f5fff;
+  --color-crimson: #1268ff;
+  --color-ember: #2f80ff;
+  --color-smoke: #52627a;
+  --color-ash: #1d2b44;
+  --color-frost: #071528;
+  --surface-soft: rgba(255, 255, 255, 0.82);
+  --surface-strong: rgba(232, 241, 255, 0.9);
+  --border-soft: rgba(18, 104, 255, 0.16);
+  --shadow-neon: 0 0 35px rgba(18, 104, 255, 0.22);
+  --shadow-card: 0 24px 60px rgba(15, 46, 92, 0.12);
+  --background-radial: radial-gradient(circle at top, rgba(18, 104, 255, 0.22), transparent 38%);
+  --selection-bg: #1268ff;
+  --selection-text: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-abyss);
+  color: var(--color-frost);
+  transition: background-color 240ms ease, color 240ms ease;
+}
+
+body::selection {
+  background: var(--selection-bg);
+  color: var(--selection-text);
+}
+
+option {
+  background: var(--color-onyx);
+  color: var(--color-frost);
+}
+
+@layer components {
+  .page-shell {
+    @apply min-h-screen bg-abyss bg-radial-red px-4 py-10 text-frost sm:px-6 lg:px-8;
+  }
+
+  .container-pro {
+    @apply mx-auto w-full max-w-7xl;
+  }
+
+  .glass-panel {
+    border-color: var(--border-soft);
+    background: var(--surface-soft);
+    @apply border shadow-card backdrop-blur-xl;
+  }
+
+  .section-eyebrow {
+    @apply text-sm font-black uppercase tracking-[0.35em] text-crimson;
+  }
+
+  .hero-title {
+    @apply text-4xl font-black tracking-tight text-frost sm:text-5xl lg:text-7xl;
+  }
+
+  .gradient-title {
+    @apply bg-gradient-to-r from-crimson via-ember to-frost bg-clip-text text-transparent;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-full bg-crimson px-6 py-3 text-sm font-black uppercase tracking-wide text-white shadow-neon transition duration-300 hover:-translate-y-1 hover:bg-ember focus:outline-none focus:ring-2 focus:ring-crimson focus:ring-offset-2 focus:ring-offset-abyss;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-full border px-6 py-3 text-sm font-bold uppercase tracking-wide text-ash transition duration-300 hover:-translate-y-1 hover:border-crimson hover:text-frost;
+    border-color: var(--border-soft);
+    background: color-mix(in srgb, var(--color-frost) 5%, transparent);
+  }
+
+  .field-pro {
+    @apply h-12 rounded-2xl border px-4 text-sm text-frost outline-none transition focus:border-crimson focus:ring-2 focus:ring-crimson;
+    border-color: var(--border-soft);
+    background: var(--surface-strong);
+  }
+
+  .field-pro::placeholder {
+    color: color-mix(in srgb, var(--color-smoke) 70%, transparent);
+  }
+
+  .card-pro {
+    @apply overflow-hidden rounded-3xl border shadow-card transition duration-300 hover:-translate-y-2 hover:border-crimson hover:shadow-neon;
+    border-color: var(--border-soft);
+    background: color-mix(in srgb, var(--color-graphite) 80%, transparent);
+  }
+}

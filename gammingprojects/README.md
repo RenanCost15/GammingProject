@@ -1,36 +1,149 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# RedCore Games
 
-## Getting Started
+RedCore Games é uma aplicação web desenvolvida por **Renan Costa** para a disciplina de Programação Web. O projeto consome a API pública da RAWG para apresentar jogos, criadores, desenvolvedoras, plataformas e publicadoras em uma interface moderna, responsiva, internacionalizada e visualmente consistente.
 
-First, run the development server:
+## Identidade visual
+
+A versão final possui duas opções de tema:
+
+- **Tema escuro:** vermelho vivo com preto, mantendo a identidade gamer principal do projeto.
+- **Tema claro:** branco com azul, pensado para melhor legibilidade e contraste em ambientes claros.
+
+A escolha de tema fica salva no navegador por `localStorage`, então o usuário mantém sua preferência ao retornar ao sistema.
+
+## Idiomas
+
+A interface possui seletor de idioma com suporte a:
+
+- Português do Brasil, como idioma padrão.
+- Inglês, como idioma alternativo.
+
+A internacionalização foi implementada com dicionário interno e gestão de estado global no front-end. Dessa forma, o sistema não depende obrigatoriamente de uma API paga de tradução para funcionar. Caso o projeto evolua, há espaço para integrar serviços externos como Google Translate API para traduzir conteúdos dinâmicos retornados por APIs externas.
+
+## Funcionalidades
+
+- Página inicial com apresentação profissional do sistema.
+- Listagem de jogos com busca, filtros, intervalo de datas e ordenação.
+- Cache local no navegador para acelerar consultas repetidas.
+- Pré-carregamento das próximas páginas em segundo plano.
+- Página de detalhes para cada jogo.
+- Páginas específicas para criadores, desenvolvedoras, plataformas e publicadoras.
+- Alternância entre tema escuro e tema claro.
+- Alternância entre português brasileiro e inglês.
+- Tratamento visual para carregamento, erros e ausência de dados.
+- Layout responsivo para desktop, tablet e dispositivos móveis.
+- Autoria ajustada para o único desenvolvedor: **Renan Costa**.
+
+## Tecnologias utilizadas
+
+- Next.js 15
+- React 19
+- Tailwind CSS
+- React Icons
+- RAWG Video Games Database API
+- `localStorage` para cache, histórico de busca, idioma e tema
+
+## Como executar
+
+1. Instale as dependências:
+
+```bash
+npm install
+```
+
+2. Crie o arquivo `.env.local` na raiz do projeto com base no `.env.example`:
+
+```bash
+cp .env.example .env.local
+```
+
+3. Edite o `.env.local` e coloque sua chave real da RAWG:
+
+```bash
+RAWG_API_KEY=sua_chave_real_da_rawg
+API_KEY=sua_chave_real_da_rawg
+NEXT_PUBLIC_RAWG_API_KEY=sua_chave_real_da_rawg
+```
+
+> O arquivo `.env.local` não deve ser enviado ao GitHub. Ele já está protegido pelo `.gitignore`.
+
+4. Execute o ambiente de desenvolvimento:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Acesse no navegador:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Build de produção
 
-## Learn More
+```bash
+npm run build
+npm run start
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Estrutura principal
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```text
+app/
+  api/games/                  # Rota interna para busca de jogos
+  components/                 # Componentes reutilizáveis de interface
+  components/AppProviders.jsx # Estado global de idioma e tema
+  games/                      # Lista e detalhes de jogos
+  creators/                   # Criadores
+  developers/                 # Desenvolvedoras
+  platforms/                  # Plataformas
+  publishers/                 # Publicadoras
+lib/
+  rawg.js                     # Cliente de acesso à RAWG API
+  gameCache.js                # Cache local e histórico de busca
+  useDebouncedValue.js        # Hook de debounce
+public/images/                # Logo e favicon
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Melhorias profissionais desta versão
 
-## Deploy on Vercel
+### Cache inteligente e pré-carregamento
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+A página de jogos usa uma estratégia híbrida:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Carrega a primeira consulta diretamente da RAWG API.
+- Salva o resultado no `localStorage` do navegador por até 24 horas.
+- Reaproveita consultas já feitas para abrir a tela quase instantaneamente.
+- Pré-carrega automaticamente as duas próximas páginas em segundo plano.
+- Exibe quantas consultas estão em cache e quando ocorreu a última atualização.
+- Permite limpar o cache manualmente pela própria tela de busca.
+
+Essa abordagem evita chamadas repetidas para a API, melhora a sensação de velocidade e demonstra gestão de estado/cache adequada para uma aplicação web moderna.
+
+### Busca avançada
+
+A busca possui:
+
+- Campo principal com debounce.
+- Histórico de buscas recentes salvo localmente.
+- Filtros por gênero, plataforma, período de lançamento e faixa de Metacritic.
+- Ordenação por avaliação, popularidade, lançamento e nome.
+- Paginação controlada.
+- Seleção de quantidade de itens por página.
+- Estados visuais de carregamento, erro, cache e pré-carregamento.
+
+### Internacionalização e temas
+
+O projeto agora possui uma camada global de preferências em `AppProviders.jsx`, responsável por:
+
+- Guardar o idioma selecionado.
+- Guardar o tema selecionado.
+- Atualizar atributos globais do documento.
+- Salvar preferências no navegador.
+- Fornecer textos traduzidos para os componentes.
+
+## Desenvolvedor
+
+**Renan Costa**  
+GitHub: https://github.com/RenanCost15  
+Projeto acadêmico de Programação Web.

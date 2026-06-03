@@ -1,7 +1,4 @@
-import { useState, useEffect } from "react";
-
-const apiKey = process.env.NEXT_PUBLIC_RAWG_API_KEY || "931f29a2e2594596ae17eff8a97ef3f4";
-const BASE_URL = "https://api.rawg.io/api/games";
+import { useEffect, useState } from 'react';
 
 export default function useGameDetails(id) {
   const [game, setGame] = useState(null);
@@ -11,25 +8,30 @@ export default function useGameDetails(id) {
   useEffect(() => {
     if (!id) return;
 
-    const fetchGame = async () => {
+    const controller = new AbortController();
+
+    async function loadGame() {
       setLoading(true);
       setError(null);
 
       try {
-        const url = `${BASE_URL}/${id}?key=${apiKey}`;
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
-
+        const response = await fetch(`/api/games/${id}`, { signal: controller.signal });
         const data = await response.json();
+
+        if (!response.ok || data?.error) {
+          throw new Error(data?.error || 'Unable to fetch game details.');
+        }
+
         setGame(data);
       } catch (err) {
-        setError(err.message);
+        if (err.name !== 'AbortError') setError(err.message);
       } finally {
         setLoading(false);
       }
-    };
+    }
 
-    fetchGame();
+    loadGame();
+    return () => controller.abort();
   }, [id]);
 
   return { game, loading, error };

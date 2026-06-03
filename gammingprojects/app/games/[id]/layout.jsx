@@ -1,12 +1,8 @@
-import "../../globals.css";
-
 export const metadata = {
-  title: "MorphGames",
-  description: "Game Page - MorphGames",
+  title: 'Detalhes do jogo | RedCore Games',
+  description: 'Informações detalhadas de jogos no RedCore Games.',
 };
 
-export default function GameLayout({ children }) {
-  return (
-        <>{children}</>
-  );
+export default function SectionLayout({ children }) {
+  return children;
 }

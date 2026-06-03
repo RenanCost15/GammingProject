@@ -1,42 +1,29 @@
+'use client';
+
 import Link from 'next/link';
+import { useAppSettings } from './AppProviders';
 
 export default function Footer() {
-    const currentYear = new Date().getFullYear();
-  
-    return (
-      <footer className="bg-grayDark text-center text-sm text-grayMedium py-2 mt-auto">
-        <p className="text-grayMedium">
-          © {currentYear} MorphGames MG. <br/>Developed and created by<br/>{" "}
-          <span>
-            <Link
-              href="https://github.com/RenanCDev"
-              className="text-grayLight hover:text-white hover:underline hover:scale-105 transition-all duration-300 m-1 font-bold"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Renan Costa
-            </Link>
-            <span className="text-grayMedium">-</span>
-            <Link
-              href="https://github.com/luizmiguel4444"
-              className="text-grayLight hover:text-white hover:underline hover:scale-105 transition-all duration-300 m-1 font-bold"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Luiz Miguel
-            </Link>
-            <span className="text-grayMedium">-</span>
-            <Link
-              href="https://github.com/Simio123"
-              className="text-grayLight hover:text-white hover:underline hover:scale-105 transition-all duration-300 m-1 font-bold"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Emerson Santos
-            </Link>
-            .
-          </span>
+  const currentYear = new Date().getFullYear();
+  const { t } = useAppSettings();
+
+  return (
+    <footer className="border-t border-white/10 bg-onyx px-4 py-8 text-center text-sm text-smoke">
+      <div className="container-pro space-y-3">
+        <p className="font-semibold text-ash">© {currentYear} RedCore Games. {t('footer.rights')}</p>
+        <p>
+          {t('footer.developed')}{' '}
+          <Link
+            href="https://github.com/RenanCost15"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-black text-crimson underline-offset-4 transition hover:text-ember hover:underline"
+          >
+            Renan Costa
+          </Link>
+          .
         </p>
-      </footer>
-    );
+      </div>
+    </footer>
+  );
 }

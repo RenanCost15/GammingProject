@@ -1,12 +1,8 @@
-import "../globals.css";
-
 export const metadata = {
-  title: "MorphGames",
-  description: "Publishers Page - MorphGames",
+  title: 'Publicadoras | RedCore Games',
+  description: 'Seção de publicadoras do RedCore Games.',
 };
 
-export default function PublishersLayout({ children }) {
-  return (
-        <>{children}</>
-  );
+export default function SectionLayout({ children }) {
+  return children;
 }
