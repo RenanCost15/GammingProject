@@ -85,7 +85,7 @@ export default function Header() {
               aria-expanded={isLanguageOpen}
             >
               <span className="flex items-center gap-2">
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-crimson/12 text-crimson transition duration-300 group-hover:bg-crimson group-hover:text-white">
+                <span className="language-trigger-globe flex h-7 w-7 items-center justify-center rounded-full transition duration-300">
                   <FiGlobe />
                 </span>
                 <span>{activeLanguage.label}</span>

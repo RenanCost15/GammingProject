@@ -124,14 +124,25 @@ option {
     background: var(--surface-strong);
   }
 
+  .field-pro:hover {
+    border-color: color-mix(in srgb, var(--color-crimson) 34%, transparent);
+    background: color-mix(in srgb, var(--color-crimson) 8%, var(--color-onyx) 92%);
+  }
+
   .field-pro::placeholder {
     color: color-mix(in srgb, var(--color-smoke) 70%, transparent);
   }
 
   .card-pro {
-    @apply overflow-hidden rounded-3xl border shadow-card transition-all duration-500 ease-out hover:-translate-y-2.5 hover:scale-[1.012] hover:border-crimson hover:shadow-[0_26px_70px_rgba(255,30,45,0.24)] active:translate-y-0 active:scale-[0.995];
+    @apply overflow-hidden rounded-3xl border shadow-card transition-all duration-500 ease-out hover:-translate-y-2.5 hover:scale-[1.012] active:translate-y-0 active:scale-[0.995];
     border-color: var(--border-soft);
     background: color-mix(in srgb, var(--color-graphite) 80%, transparent);
+  }
+
+  .card-pro:hover {
+    border-color: color-mix(in srgb, var(--color-crimson) 50%, transparent);
+    background: color-mix(in srgb, var(--color-crimson) 7%, var(--color-graphite) 93%);
+    box-shadow: 0 26px 70px color-mix(in srgb, var(--color-crimson) 24%, transparent), 0 0 0 1px color-mix(in srgb, var(--color-crimson) 18%, transparent);
   }
 
   .card-clickable {
@@ -139,44 +150,84 @@ option {
   }
 
   .nav-link-soft {
-    @apply rounded-full border border-transparent px-3 py-2 text-[0.72rem] font-extrabold uppercase tracking-wide text-ash transition-all duration-500 ease-out hover:-translate-y-1 hover:border-crimson hover:bg-crimson hover:text-crimson hover:shadow-[0_12px_28px_rgba(255,30,45,0.16)] xl:px-3.5;
+    @apply rounded-full border px-3 py-2 text-[0.72rem] font-extrabold uppercase tracking-wide text-ash transition-all duration-500 ease-out hover:-translate-y-1 xl:px-3.5;
+    border-color: transparent;
+    background: transparent;
+  }
+
+  .nav-link-soft:hover {
+    border-color: color-mix(in srgb, var(--color-crimson) 42%, transparent);
+    background: color-mix(in srgb, var(--color-crimson) 14%, var(--color-onyx) 86%);
+    color: var(--color-frost);
+    box-shadow: 0 14px 34px color-mix(in srgb, var(--color-crimson) 20%, transparent);
   }
 
   .nav-link-soft-active {
-    @apply border-crimson bg-crimson text-white shadow-[0_14px_32px_rgba(255,30,45,0.28)];
+    @apply text-white;
+    border-color: var(--color-crimson);
+    background: linear-gradient(135deg, var(--color-crimson), var(--color-blood));
+    box-shadow: 0 14px 34px color-mix(in srgb, var(--color-crimson) 32%, transparent);
   }
 
   .language-trigger,
   .theme-toggle {
-    @apply inline-flex h-11 items-center justify-between gap-2 rounded-full border px-3 text-xs font-black uppercase tracking-wide text-ash transition-all duration-500 ease-out hover:-translate-y-1 hover:border-crimson hover:bg-crimson hover:text-crimson hover:shadow-[0_14px_34px_rgba(255,30,45,0.2)] focus:outline-none focus:ring-2 focus:ring-crimson focus:ring-offset-2 focus:ring-offset-abyss active:translate-y-0 active:scale-[0.99];
+    @apply inline-flex h-11 items-center justify-between gap-2 rounded-full border px-3 text-xs font-black uppercase tracking-wide text-ash transition-all duration-500 ease-out hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-crimson focus:ring-offset-2 focus:ring-offset-abyss active:translate-y-0 active:scale-[0.99];
     border-color: var(--border-soft);
     background: color-mix(in srgb, var(--color-frost) 7%, transparent);
   }
 
+  .language-trigger:hover,
+  .theme-toggle:hover {
+    border-color: color-mix(in srgb, var(--color-crimson) 46%, transparent);
+    background: color-mix(in srgb, var(--color-crimson) 14%, var(--color-onyx) 86%);
+    color: var(--color-frost);
+    box-shadow: 0 16px 38px color-mix(in srgb, var(--color-crimson) 24%, transparent);
+  }
+
   .language-trigger {
-    @apply min-w-[118px];
+    @apply min-w-[112px];
   }
 
   .language-trigger-open {
-    @apply border-crimson bg-crimson text-white shadow-[0_16px_42px_rgba(255,30,45,0.28)];
+    @apply text-white;
+    border-color: var(--color-crimson);
+    background: linear-gradient(135deg, var(--color-crimson), var(--color-blood));
+    box-shadow: 0 16px 42px color-mix(in srgb, var(--color-crimson) 30%, transparent);
   }
 
   .theme-toggle-icon {
-    @apply flex h-7 w-7 items-center justify-center rounded-full bg-crimson text-crimson shadow-[0_0_18px_rgba(255,30,45,0.18)] transition-all duration-500 group-hover:bg-crimson group-hover:text-white;
+    @apply flex h-7 w-7 items-center justify-center rounded-full transition-all duration-500;
+    background: color-mix(in srgb, var(--color-crimson) 16%, transparent);
+    color: var(--color-crimson);
+    box-shadow: 0 0 18px color-mix(in srgb, var(--color-crimson) 22%, transparent);
+  }
+
+  .theme-toggle:hover .theme-toggle-icon,
+  .language-trigger:hover .language-trigger-globe {
+    background: var(--color-crimson);
+    color: #fff;
+    transform: rotate(-8deg) scale(1.06);
   }
 
   .language-popover {
-    @apply absolute right-0 top-[calc(100%+0.75rem)] z-[70] w-52 overflow-hidden rounded-[1.4rem] border p-2 shadow-[0_24px_70px_rgba(0,0,0,0.28)] backdrop-blur-2xl;
-    border-color: var(--border-soft);
+    @apply absolute right-0 top-[calc(100%+0.6rem)] z-[70] w-48 overflow-hidden rounded-2xl border p-2 shadow-[0_24px_70px_rgba(0,0,0,0.28)] backdrop-blur-2xl;
+    border-color: color-mix(in srgb, var(--color-crimson) 20%, var(--border-soft));
     background: color-mix(in srgb, var(--color-onyx) 96%, transparent);
   }
 
   .language-option {
-    @apply flex w-full items-center justify-between gap-3 rounded-2xl px-3 py-3 text-left text-ash transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-crimson hover:text-crimson;
+    @apply flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-left text-ash transition-all duration-300 ease-out hover:-translate-y-0.5;
+  }
+
+  .language-option:hover {
+    background: color-mix(in srgb, var(--color-crimson) 12%, var(--color-onyx) 88%);
+    color: var(--color-frost);
   }
 
   .language-option-active {
-    @apply bg-crimson text-white shadow-[0_14px_28px_rgba(255,30,45,0.24)];
+    @apply text-white;
+    background: linear-gradient(135deg, var(--color-crimson), var(--color-blood));
+    box-shadow: 0 12px 26px color-mix(in srgb, var(--color-crimson) 24%, transparent);
   }
 
   .inner-panel {
@@ -187,9 +238,16 @@ option {
 
 
   .filter-choice {
-    @apply border text-ash transition duration-300 ease-out hover:-translate-y-0.5 hover:border-crimson hover:text-frost hover:shadow-neon;
+    @apply border text-ash transition duration-300 ease-out hover:-translate-y-1;
     border-color: var(--border-soft);
     background: color-mix(in srgb, var(--color-frost) 5%, transparent);
+  }
+
+  .filter-choice:hover {
+    border-color: color-mix(in srgb, var(--color-crimson) 46%, transparent);
+    background: color-mix(in srgb, var(--color-crimson) 13%, var(--color-onyx) 87%);
+    color: var(--color-frost);
+    box-shadow: 0 14px 34px color-mix(in srgb, var(--color-crimson) 18%, transparent);
   }
 
   .surface-subtle {
@@ -223,9 +281,15 @@ option {
   }
 
   .soft-feature-row {
-    @apply flex items-center gap-4 rounded-2xl border p-4 transition-all duration-500 ease-out hover:-translate-y-1.5 hover:border-crimson hover:shadow-[0_18px_38px_rgba(255,30,45,0.18)];
+    @apply flex items-center gap-4 rounded-2xl border p-4 transition-all duration-500 ease-out hover:-translate-y-1.5;
     border-color: var(--border-soft);
     background: color-mix(in srgb, var(--color-frost) 5%, transparent);
+  }
+
+  .soft-feature-row:hover {
+    border-color: color-mix(in srgb, var(--color-crimson) 45%, transparent);
+    background: color-mix(in srgb, var(--color-crimson) 9%, var(--color-onyx) 91%);
+    box-shadow: 0 18px 38px color-mix(in srgb, var(--color-crimson) 18%, transparent);
   }
 
   .expand-card-details {
@@ -260,4 +324,49 @@ option {
 
 .animate-soft-in {
   animation: soft-in 180ms ease-out both;
+}
+
+
+/* Ajustes finais de refinamento visual: hover claro, menus compactos e ícones sempre visíveis. */
+.nav-link-soft,
+.language-trigger,
+.theme-toggle,
+.filter-choice,
+.field-pro,
+.card-pro,
+.btn-primary,
+.btn-secondary {
+  will-change: transform, box-shadow, background-color, border-color;
+}
+
+.theme-toggle svg,
+.language-trigger svg {
+  display: block;
+  stroke-width: 2.5;
+}
+
+[data-theme='light'] .nav-link-soft:hover,
+[data-theme='light'] .language-trigger:hover,
+[data-theme='light'] .theme-toggle:hover,
+[data-theme='light'] .filter-choice:hover,
+[data-theme='light'] .field-pro:hover {
+  background: color-mix(in srgb, var(--color-crimson) 11%, #ffffff 89%);
+}
+
+[data-theme='dark'] .nav-link-soft:hover,
+[data-theme='dark'] .language-trigger:hover,
+[data-theme='dark'] .theme-toggle:hover,
+[data-theme='dark'] .filter-choice:hover,
+[data-theme='dark'] .field-pro:hover {
+  background: color-mix(in srgb, var(--color-crimson) 14%, #171018 86%);
+}
+
+select.field-pro option {
+  background: var(--color-onyx);
+  color: var(--color-frost);
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+  filter: brightness(1.06);
 }
