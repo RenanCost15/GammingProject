@@ -59,7 +59,7 @@ body {
   margin: 0;
   background: var(--color-abyss);
   color: var(--color-frost);
-  transition: background-color 240ms ease, color 240ms ease;
+  transition: background-color 320ms ease, color 320ms ease;
 }
 
 body::selection {
@@ -100,17 +100,26 @@ option {
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-full bg-crimson px-6 py-3 text-sm font-black uppercase tracking-wide text-white shadow-neon transition duration-300 hover:-translate-y-1 hover:bg-ember focus:outline-none focus:ring-2 focus:ring-crimson focus:ring-offset-2 focus:ring-offset-abyss;
+    @apply relative inline-flex items-center justify-center overflow-hidden rounded-full bg-crimson px-6 py-3 text-sm font-black uppercase tracking-wide text-white shadow-neon transition-all duration-500 ease-out hover:-translate-y-1.5 hover:scale-[1.025] hover:bg-ember hover:shadow-[0_18px_42px_rgba(255,30,45,0.34)] focus:outline-none focus:ring-2 focus:ring-crimson focus:ring-offset-2 focus:ring-offset-abyss active:translate-y-0 active:scale-[0.99];
+  }
+
+  .btn-primary::before {
+    content: '';
+    @apply pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 -skew-x-12 bg-white/25 opacity-0 transition duration-700;
+  }
+
+  .btn-primary:hover::before {
+    @apply left-[120%] opacity-100;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-full border px-6 py-3 text-sm font-bold uppercase tracking-wide text-ash transition duration-300 hover:-translate-y-1 hover:border-crimson hover:text-frost;
+    @apply inline-flex items-center justify-center rounded-full border px-6 py-3 text-sm font-bold uppercase tracking-wide text-ash transition-all duration-500 ease-out hover:-translate-y-1.5 hover:scale-[1.025] hover:border-crimson hover:text-frost hover:shadow-[0_16px_36px_rgba(255,30,45,0.24)] active:translate-y-0 active:scale-[0.99];
     border-color: var(--border-soft);
-    background: color-mix(in srgb, var(--color-frost) 5%, transparent);
+    background: color-mix(in srgb, var(--color-frost) 7%, transparent);
   }
 
   .field-pro {
-    @apply h-12 rounded-2xl border px-4 text-sm text-frost outline-none transition focus:border-crimson focus:ring-2 focus:ring-crimson;
+    @apply h-12 rounded-2xl border px-4 text-sm text-frost outline-none transition duration-300 focus:border-crimson focus:ring-2 focus:ring-crimson;
     border-color: var(--border-soft);
     background: var(--surface-strong);
   }
@@ -120,8 +129,135 @@ option {
   }
 
   .card-pro {
-    @apply overflow-hidden rounded-3xl border shadow-card transition duration-300 hover:-translate-y-2 hover:border-crimson hover:shadow-neon;
+    @apply overflow-hidden rounded-3xl border shadow-card transition-all duration-500 ease-out hover:-translate-y-2.5 hover:scale-[1.012] hover:border-crimson hover:shadow-[0_26px_70px_rgba(255,30,45,0.24)] active:translate-y-0 active:scale-[0.995];
     border-color: var(--border-soft);
     background: color-mix(in srgb, var(--color-graphite) 80%, transparent);
   }
+
+  .card-clickable {
+    @apply block h-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-crimson focus:ring-offset-2 focus:ring-offset-abyss;
+  }
+
+  .nav-link-soft {
+    @apply rounded-full border border-transparent px-3 py-2 text-[0.72rem] font-extrabold uppercase tracking-wide text-ash transition-all duration-500 ease-out hover:-translate-y-1 hover:border-crimson hover:bg-crimson hover:text-crimson hover:shadow-[0_12px_28px_rgba(255,30,45,0.16)] xl:px-3.5;
+  }
+
+  .nav-link-soft-active {
+    @apply border-crimson bg-crimson text-white shadow-[0_14px_32px_rgba(255,30,45,0.28)];
+  }
+
+  .language-trigger,
+  .theme-toggle {
+    @apply inline-flex h-11 items-center justify-between gap-2 rounded-full border px-3 text-xs font-black uppercase tracking-wide text-ash transition-all duration-500 ease-out hover:-translate-y-1 hover:border-crimson hover:bg-crimson hover:text-crimson hover:shadow-[0_14px_34px_rgba(255,30,45,0.2)] focus:outline-none focus:ring-2 focus:ring-crimson focus:ring-offset-2 focus:ring-offset-abyss active:translate-y-0 active:scale-[0.99];
+    border-color: var(--border-soft);
+    background: color-mix(in srgb, var(--color-frost) 7%, transparent);
+  }
+
+  .language-trigger {
+    @apply min-w-[118px];
+  }
+
+  .language-trigger-open {
+    @apply border-crimson bg-crimson text-white shadow-[0_16px_42px_rgba(255,30,45,0.28)];
+  }
+
+  .theme-toggle-icon {
+    @apply flex h-7 w-7 items-center justify-center rounded-full bg-crimson text-crimson shadow-[0_0_18px_rgba(255,30,45,0.18)] transition-all duration-500 group-hover:bg-crimson group-hover:text-white;
+  }
+
+  .language-popover {
+    @apply absolute right-0 top-[calc(100%+0.75rem)] z-[70] w-52 overflow-hidden rounded-[1.4rem] border p-2 shadow-[0_24px_70px_rgba(0,0,0,0.28)] backdrop-blur-2xl;
+    border-color: var(--border-soft);
+    background: color-mix(in srgb, var(--color-onyx) 96%, transparent);
+  }
+
+  .language-option {
+    @apply flex w-full items-center justify-between gap-3 rounded-2xl px-3 py-3 text-left text-ash transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-crimson hover:text-crimson;
+  }
+
+  .language-option-active {
+    @apply bg-crimson text-white shadow-[0_14px_28px_rgba(255,30,45,0.24)];
+  }
+
+  .inner-panel {
+    @apply rounded-[1.5rem] border p-5 shadow-neon;
+    border-color: color-mix(in srgb, var(--color-crimson) 32%, transparent);
+    background: color-mix(in srgb, var(--color-onyx) 74%, transparent);
+  }
+
+
+  .filter-choice {
+    @apply border text-ash transition duration-300 ease-out hover:-translate-y-0.5 hover:border-crimson hover:text-frost hover:shadow-neon;
+    border-color: var(--border-soft);
+    background: color-mix(in srgb, var(--color-frost) 5%, transparent);
+  }
+
+  .surface-subtle {
+    @apply border p-4;
+    border-color: var(--border-soft);
+    background: color-mix(in srgb, var(--color-frost) 5%, transparent);
+  }
+
+  .chip-soft {
+    @apply border px-3 py-2;
+    border-color: var(--border-soft);
+    background: color-mix(in srgb, var(--color-frost) 5%, transparent);
+  }
+
+  select.field-pro {
+    appearance: none;
+    cursor: pointer;
+    background-image: linear-gradient(45deg, transparent 50%, var(--color-crimson) 50%), linear-gradient(135deg, var(--color-crimson) 50%, transparent 50%);
+    background-position: calc(100% - 18px) 50%, calc(100% - 12px) 50%;
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+    padding-right: 2.6rem;
+  }
+
+  input[type='date'].field-pro {
+    color-scheme: dark;
+  }
+
+  [data-theme='light'] input[type='date'].field-pro {
+    color-scheme: light;
+  }
+
+  .soft-feature-row {
+    @apply flex items-center gap-4 rounded-2xl border p-4 transition-all duration-500 ease-out hover:-translate-y-1.5 hover:border-crimson hover:shadow-[0_18px_38px_rgba(255,30,45,0.18)];
+    border-color: var(--border-soft);
+    background: color-mix(in srgb, var(--color-frost) 5%, transparent);
+  }
+
+  .expand-card-details {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows 520ms ease, opacity 420ms ease, margin-top 420ms ease;
+  }
+
+  .group:hover .expand-card-details,
+  .group:focus-within .expand-card-details {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    margin-top: 1rem;
+  }
+
+  .expand-card-details > div {
+    overflow: hidden;
+  }
+}
+
+@keyframes soft-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-soft-in {
+  animation: soft-in 180ms ease-out both;
 }

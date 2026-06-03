@@ -16,7 +16,7 @@ export default function Home() {
     <div className="page-shell overflow-hidden">
       <section className="container-pro grid min-h-[calc(100vh-180px)] items-center gap-12 py-10 lg:grid-cols-[1.1fr_.9fr]">
         <div className="relative z-10 space-y-8">
-          <div className="inline-flex rounded-full border border-crimson/40 bg-crimson/10 px-4 py-2 text-xs font-black uppercase tracking-[0.3em] text-crimson">
+          <div className="inline-flex rounded-full border border-crimson/40 bg-crimson/10 px-4 py-2 text-xs font-black uppercase tracking-[0.3em] text-crimson shadow-[0_0_24px_rgba(255,30,45,0.12)]">
             {t('home.badge')}
           </div>
 
@@ -34,7 +34,7 @@ export default function Home() {
 
           <div className="grid max-w-2xl grid-cols-3 gap-3 pt-4">
             {stats.map((stat) => (
-              <div key={stat.label} className="glass-panel rounded-2xl p-4">
+              <div key={stat.label} className="glass-panel rounded-2xl p-4 transition duration-300 hover:-translate-y-1 hover:border-crimson/40">
                 <p className="text-2xl font-black text-crimson">{stat.value}</p>
                 <p className="mt-1 text-xs font-bold uppercase tracking-wide text-smoke">{stat.label}</p>
               </div>
@@ -45,7 +45,7 @@ export default function Home() {
         <div className="relative min-h-[520px]">
           <div className="absolute inset-0 rounded-[3rem] bg-crimson/20 blur-3xl" />
           <div className="glass-panel relative h-full rounded-[2rem] p-6">
-            <div className="rounded-[1.5rem] border border-crimson/30 bg-black/40 p-5 shadow-neon">
+            <div className="inner-panel">
               <p className="section-eyebrow">{t('home.panelEyebrow')}</p>
               <h2 className="mt-4 text-3xl font-black text-frost">{t('home.panelTitle')}</h2>
               <p className="mt-3 text-sm leading-7 text-smoke">{t('home.panelText')}</p>
@@ -53,7 +53,7 @@ export default function Home() {
 
             <div className="mt-6 grid gap-4">
               {features.map((feature, index) => (
-                <div key={feature} className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                <div key={feature} className="soft-feature-row">
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-crimson text-sm font-black text-white">
                     0{index + 1}
                   </span>

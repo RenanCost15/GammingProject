@@ -2,7 +2,9 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { FiGlobe, FiMoon, FiSun } from 'react-icons/fi';
+import { usePathname } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
+import { FiCheck, FiChevronDown, FiGlobe, FiMoon, FiSun } from 'react-icons/fi';
 import { useAppSettings } from './AppProviders';
 
 const navigation = [
@@ -17,62 +19,134 @@ const navigation = [
 
 export default function Header() {
   const { language, setLanguage, theme, setTheme, t } = useAppSettings();
+  const pathname = usePathname();
+  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const languageMenuRef = useRef(null);
+
+  const languages = [
+    { value: 'pt-BR', label: 'PT-BR', description: t('controls.portuguese') },
+    { value: 'en', label: 'EN', description: t('controls.english') },
+  ];
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (languageMenuRef.current && !languageMenuRef.current.contains(event.target)) {
+        setIsLanguageOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const activeLanguage = languages.find((item) => item.value === language) || languages[0];
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-abyss/85 backdrop-blur-2xl">
-      <div className="container-pro flex flex-col gap-4 px-4 py-4 sm:px-6 xl:flex-row xl:items-center xl:justify-between xl:px-8">
-        <Link href="/" className="group flex items-center gap-3" aria-label="RedCore Games">
-          <span className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl border border-crimson/40 bg-onyx shadow-neon">
-            <Image src="/images/logo.svg" alt="Logo RedCore Games" width={42} height={42} priority />
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-abyss/86 shadow-[0_12px_38px_rgba(0,0,0,0.2)] backdrop-blur-2xl">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-crimson/60 to-transparent" />
+
+      <div className="container-pro flex min-h-[86px] items-center justify-between gap-5 px-4 py-3 sm:px-6 lg:px-8">
+        <Link href="/" className="group flex shrink-0 items-center gap-3" aria-label="RedCore Games">
+          <span className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl border border-crimson/45 bg-onyx shadow-neon transition-all duration-500 ease-out group-hover:-translate-y-1 group-hover:scale-105 group-hover:shadow-[0_18px_40px_rgba(255,30,45,0.28)]">
+            <span className="absolute inset-0 bg-gradient-to-br from-crimson/30 via-transparent to-ember/20 opacity-80" />
+            <Image className="relative z-10" src="/images/logo.svg" alt="Logo RedCore Games" width={42} height={42} priority />
           </span>
           <span className="leading-none">
-            <span className="block text-xl font-black uppercase tracking-tight text-frost transition group-hover:text-crimson">
+            <span className="block text-lg font-black uppercase tracking-tight text-frost transition duration-300 group-hover:text-crimson sm:text-xl">
               RedCore
             </span>
-            <span className="block text-xs font-bold uppercase tracking-[0.32em] text-smoke">Games</span>
+            <span className="block text-[0.68rem] font-bold uppercase tracking-[0.32em] text-smoke">Games</span>
           </span>
         </Link>
 
-        <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-end">
-          <nav className="flex flex-wrap items-center gap-2 xl:justify-end" aria-label="Navegação principal">
-            {navigation.map(({ href, key }) => (
+        <nav className="hidden min-w-0 flex-1 items-center justify-center gap-1 lg:flex" aria-label="Navegação principal">
+          {navigation.map(({ href, key }) => {
+            const isActive = href === '/' ? pathname === '/' : pathname?.startsWith(href);
+
+            return (
               <Link
                 key={href}
                 href={href}
-                className="rounded-full px-3 py-2 text-xs font-extrabold uppercase tracking-wide text-ash transition duration-300 hover:bg-crimson hover:text-white sm:text-sm"
+                className={`nav-link-soft ${isActive ? 'nav-link-soft-active' : ''}`}
               >
                 {t(key)}
               </Link>
-            ))}
-          </nav>
+            );
+          })}
+        </nav>
 
-          <div className="flex flex-wrap items-center gap-2">
-            <label className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-black uppercase tracking-wide text-ash">
-              <FiGlobe className="text-crimson" />
-              <span className="sr-only">{t('controls.language')}</span>
-              <select
-                value={language}
-                onChange={(event) => setLanguage(event.target.value)}
-                className="bg-transparent text-xs font-black uppercase tracking-wide outline-none"
-                aria-label={t('controls.language')}
-              >
-                <option value="pt-BR">PT-BR</option>
-                <option value="en">EN</option>
-              </select>
-            </label>
-
+        <div className="flex shrink-0 items-center gap-2">
+          <div className="relative" ref={languageMenuRef}>
             <button
               type="button"
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-black uppercase tracking-wide text-ash transition hover:border-crimson hover:text-frost"
-              aria-label={t('controls.theme')}
+              onClick={() => setIsLanguageOpen((current) => !current)}
+              className={`language-trigger group ${isLanguageOpen ? 'language-trigger-open' : ''}`}
+              aria-label={t('controls.language')}
+              aria-expanded={isLanguageOpen}
             >
-              {theme === 'dark' ? <FiMoon className="text-crimson" /> : <FiSun className="text-crimson" />}
-              {theme === 'dark' ? t('controls.dark') : t('controls.light')}
+              <span className="flex items-center gap-2">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-crimson/12 text-crimson transition duration-300 group-hover:bg-crimson group-hover:text-white">
+                  <FiGlobe />
+                </span>
+                <span>{activeLanguage.label}</span>
+              </span>
+              <FiChevronDown className={`text-sm transition duration-300 ${isLanguageOpen ? 'rotate-180 text-frost' : 'text-smoke'}`} />
             </button>
+
+            {isLanguageOpen && (
+              <div className="language-popover animate-soft-in" role="menu">
+                <div className="px-3 pb-2 pt-1 text-[0.65rem] font-black uppercase tracking-[0.24em] text-smoke">
+                  {t('controls.language')}
+                </div>
+                {languages.map((item) => {
+                  const isActive = item.value === language;
+                  return (
+                    <button
+                      key={item.value}
+                      type="button"
+                      onClick={() => {
+                        setLanguage(item.value);
+                        setIsLanguageOpen(false);
+                      }}
+                      className={`language-option ${isActive ? 'language-option-active' : ''}`}
+                      role="menuitem"
+                    >
+                      <span>
+                        <span className="block text-sm font-black">{item.label}</span>
+                        <span className="block text-xs font-semibold opacity-75">{item.description}</span>
+                      </span>
+                      {isActive && <FiCheck className="text-base" />}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
+
+          <button
+            type="button"
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            className="theme-toggle group"
+            aria-label={t('controls.theme')}
+          >
+            <span className="theme-toggle-icon">
+              {theme === 'dark' ? <FiMoon /> : <FiSun />}
+            </span>
+            <span className="hidden sm:inline">{theme === 'dark' ? t('controls.dark') : t('controls.light')}</span>
+          </button>
         </div>
       </div>
+
+      <nav className="container-pro flex gap-2 overflow-x-auto px-4 pb-3 sm:px-6 lg:hidden" aria-label="Navegação principal mobile">
+        {navigation.map(({ href, key }) => {
+          const isActive = href === '/' ? pathname === '/' : pathname?.startsWith(href);
+          return (
+            <Link key={href} href={href} className={`nav-link-soft shrink-0 ${isActive ? 'nav-link-soft-active' : ''}`}>
+              {t(key)}
+            </Link>
+          );
+        })}
+      </nav>
     </header>
   );
 }

@@ -64,7 +64,7 @@ export default function GameDetailsView({ gameData }) {
 
 function Info({ label, value }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-black/25 p-4">
+    <div className="rounded-2xl surface-subtle">
       <p className="text-xs font-black uppercase tracking-[0.24em] text-crimson">{label}</p>
       <p className="mt-2 text-sm font-semibold leading-6 text-ash">{value}</p>
     </div>
