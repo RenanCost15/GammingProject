@@ -6,6 +6,7 @@ import EmptyState from './EmptyState';
 import PageHero from './PageHero';
 import { fetchCollection } from '../../lib/rawg';
 import { useAppSettings } from './AppProviders';
+import LoadingState from './LoadingState';
 
 const endpointBySection = {
   creators: '/creators',
@@ -62,9 +63,7 @@ export default function CollectionPage({ section }) {
     <div className="page-shell">
       <PageHero content={`sections.${section}`} />
       <section className="container-pro">
-        {loading && (
-          <p className="mb-8 text-center text-lg font-bold text-smoke">{t('games.loadingGames')}</p>
-        )}
+        {loading && <LoadingState label={t('common.loadingContent')} />}
         {!loading && items.length === 0 && (
           <p className="mb-8 text-center text-lg font-bold text-smoke">{t(`sections.${section}.empty`)}</p>
         )}

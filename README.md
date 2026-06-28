@@ -7,9 +7,10 @@ RedCore Games é uma aplicação web desenvolvida por **Renan Costa** para a dis
 - Página inicial de apresentação do sistema.
 - Catálogo de jogos com busca, filtros, intervalo de datas, ordenação e paginação.
 - Cache local no navegador para consultas repetidas e pré-carregamento das próximas páginas.
-- Tela de detalhes de jogos.
+- Tela de detalhes de jogos com nota RAWG, Metacritic, classificação etária, tempo médio, desenvolvedoras, publicadoras, tags, galeria de screenshots e requisitos de sistema quando disponíveis.
 - Seções para criadores, desenvolvedoras, plataformas e publicadoras.
 - Tema claro/escuro e suporte a português do Brasil e inglês.
+- Indicador de carregamento animado e rolagem interna nos cards de coleções extensas.
 - Estados visuais de carregamento, erro e ausência de dados.
 - Layout responsivo para desktop, tablet e celular.
 

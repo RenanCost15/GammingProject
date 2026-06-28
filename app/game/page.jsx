@@ -3,6 +3,7 @@
 import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import GameDetailsView from '../components/GameDetailsView';
+import LoadingState from '../components/LoadingState';
 import { rawgFetch } from '../../lib/rawg';
 import { useAppSettings } from '../components/AppProviders';
 
@@ -37,8 +38,14 @@ function GameDetailsContent() {
       setError('');
 
       try {
-        const data = await rawgFetch(`/games/${encodeURIComponent(gameId)}`, {}, { signal: controller.signal });
-        if (isActive) setGameData(data);
+        const [detailsResult, screenshotsResult] = await Promise.all([
+          rawgFetch(`/games/${encodeURIComponent(gameId)}`, {}, { signal: controller.signal }),
+          rawgFetch(`/games/${encodeURIComponent(gameId)}/screenshots`, { page_size: '8' }, { signal: controller.signal }).catch(() => ({ results: [] })),
+        ]);
+
+        if (isActive) {
+          setGameData({ ...detailsResult, screenshots: screenshotsResult?.results || [] });
+        }
       } catch (err) {
         if (err.name !== 'AbortError' && isActive) {
           setError(err.message || t('details.tryAgain'));
@@ -62,11 +69,9 @@ function GameDetailsContent() {
 }
 
 function GameDetailsLoading() {
-  const { t } = useAppSettings();
-
   return (
-    <div className="page-shell flex items-center justify-center">
-      <p className="text-lg font-bold text-smoke">{t('games.loadingGames')}</p>
+    <div className="page-shell flex min-h-[55vh] items-center justify-center">
+      <LoadingState />
     </div>
   );
 }
