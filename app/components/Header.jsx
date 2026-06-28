@@ -1,13 +1,11 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { FiCheck, FiChevronDown, FiGlobe, FiMoon, FiSun } from 'react-icons/fi';
 import { useAppSettings } from './AppProviders';
-
-const publicAssetBasePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+import BrandLogo from './BrandLogo';
 
 const navigation = [
   { href: '/', key: 'nav.home' },
@@ -49,16 +47,7 @@ export default function Header() {
 
       <div className="container-pro flex min-h-[86px] items-center justify-between gap-5 px-4 py-3 sm:px-6 lg:px-8">
         <Link href="/" className="group flex shrink-0 items-center gap-3" aria-label="RedCore Games">
-          <span className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl border border-crimson/45 bg-onyx shadow-neon transition-all duration-500 ease-out group-hover:-translate-y-1 group-hover:scale-105 group-hover:shadow-[0_18px_40px_rgba(255,30,45,0.28)]">
-            <span className="absolute inset-0 bg-gradient-to-br from-crimson/30 via-transparent to-ember/20 opacity-80" />
-            <Image className="relative z-10" src={`${publicAssetBasePath}/images/logo.svg`} alt="Logo RedCore Games" width={42} height={42} priority />
-          </span>
-          <span className="leading-none">
-            <span className="block text-lg font-black uppercase tracking-tight text-frost transition duration-300 group-hover:text-crimson sm:text-xl">
-              RedCore
-            </span>
-            <span className="block text-[0.68rem] font-bold uppercase tracking-[0.32em] text-smoke">Games</span>
-          </span>
+          <BrandLogo theme={theme} />
         </Link>
 
         <nav className="hidden min-w-0 flex-1 items-center justify-center gap-1 lg:flex" aria-label="Navegação principal">

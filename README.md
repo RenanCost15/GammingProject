@@ -53,16 +53,11 @@ Acesse `http://localhost:3000`.
 O projeto está configurado para exportação estática e para deploy automático via GitHub Actions.
 
 1. No GitHub, abra **Settings → Pages** e selecione **Source: GitHub Actions**.
-2. Abra **Settings → Secrets and variables → Actions** e crie o secret:
-
-```text
-NEXT_PUBLIC_RAWG_API_KEY
-```
-
-3. Cole nele a chave da RAWG e envie as alterações para a branch `main`.
+2. Mantenha o arquivo `.env.local` versionado no repositório, pois o workflow lê esse arquivo durante o build estático.
+3. Envie as alterações para a branch `main`.
 4. Acompanhe a publicação na aba **Actions**.
 
-O GitHub Pages não executa rotas de API nem Server Actions do Next.js. Por isso, esta versão consulta a RAWG diretamente no navegador e utiliza rotas estáticas. A chave com prefixo `NEXT_PUBLIC_` é incorporada ao JavaScript gerado; não use uma credencial sensível, paga ou reutilizada em outro serviço.
+> Observação importante: como o GitHub Pages é hospedagem estática, a chave `NEXT_PUBLIC_RAWG_API_KEY` fica pública no JavaScript gerado. Use apenas uma chave apropriada para esse cenário.
 
 A URL prevista para este repositório é:
 

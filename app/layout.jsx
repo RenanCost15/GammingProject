@@ -10,9 +10,9 @@ export const metadata = {
   description: 'Explore jogos, criadores, desenvolvedoras, plataformas e publicadoras em uma interface moderna com cache, busca avançada, temas e suporte a idiomas.',
   authors: [{ name: 'Renan Costa' }],
   icons: {
-    icon: `${publicAssetBasePath}/images/favicon.png`,
-    shortcut: `${publicAssetBasePath}/images/favicon.png`,
-    apple: `${publicAssetBasePath}/images/favicon.png`,
+    icon: `${publicAssetBasePath}/images/favicon.svg`,
+    shortcut: `${publicAssetBasePath}/images/favicon.svg`,
+    apple: `${publicAssetBasePath}/images/favicon.svg`,
   },
 };
 

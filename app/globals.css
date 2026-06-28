@@ -370,3 +370,74 @@ select.field-pro option {
 .btn-secondary:hover {
   filter: brightness(1.06);
 }
+
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.brand-mark-shell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.35rem;
+  height: 3.35rem;
+  border-radius: 1.15rem;
+  border: 1px solid;
+  box-shadow: var(--brand-glow);
+  transition: transform 360ms ease, box-shadow 360ms ease, border-color 360ms ease;
+}
+
+.group:hover .brand-mark-shell {
+  transform: translateY(-3px) scale(1.03);
+}
+
+.brand-wordmark {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-wordmark-main {
+  font-size: 1.25rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  transition: color 260ms ease, transform 260ms ease;
+}
+
+.brand-wordmark-sub {
+  margin-top: 0.18rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+}
+
+.group:hover .brand-wordmark-main {
+  color: var(--color-crimson) !important;
+}
+
+@media (max-width: 480px) {
+  .brand-wordmark-main {
+    font-size: 1.05rem;
+  }
+
+  .brand-wordmark-sub {
+    font-size: 0.64rem;
+    letter-spacing: 0.28em;
+  }
+}
+
+body {
+  background-image:
+    radial-gradient(circle at top, color-mix(in srgb, var(--color-crimson) 14%, transparent) 0%, transparent 34%),
+    linear-gradient(180deg, color-mix(in srgb, var(--color-onyx) 90%, transparent) 0%, var(--color-abyss) 100%);
+  background-attachment: fixed;
+}
+
+[data-theme='light'] body {
+  background-image:
+    radial-gradient(circle at top, rgba(18, 104, 255, 0.18) 0%, rgba(18, 104, 255, 0) 36%),
+    linear-gradient(180deg, #fbfdff 0%, #f4f8ff 100%);
+}
