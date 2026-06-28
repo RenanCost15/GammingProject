@@ -49,9 +49,9 @@ export default function GameDetailsView({ gameData }) {
 
             <div className="flex flex-col gap-4 sm:flex-row">
               {gameData.website && (
-                <Link href={gameData.website} target="_blank" rel="noopener noreferrer" className="btn-primary">
+                <a href={gameData.website} target="_blank" rel="noopener noreferrer" className="btn-primary">
                   {t('details.website')}
-                </Link>
+                </a>
               )}
               <Link href="/games" className="btn-secondary">{t('details.backGames')}</Link>
             </div>

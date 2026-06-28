@@ -3,14 +3,16 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import { AppProviders } from './components/AppProviders';
 
+const publicAssetBasePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
 export const metadata = {
   title: 'RedCore Games | Catálogo Gamer Inteligente',
   description: 'Explore jogos, criadores, desenvolvedoras, plataformas e publicadoras em uma interface moderna com cache, busca avançada, temas e suporte a idiomas.',
   authors: [{ name: 'Renan Costa' }],
   icons: {
-    icon: '/images/favicon.png',
-    shortcut: '/images/favicon.png',
-    apple: '/images/favicon.png',
+    icon: `${publicAssetBasePath}/images/favicon.png`,
+    shortcut: `${publicAssetBasePath}/images/favicon.png`,
+    apple: `${publicAssetBasePath}/images/favicon.png`,
   },
 };
 

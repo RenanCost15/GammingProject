@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { rawgFetch } from '../lib/rawg';
 
 export default function useGameDetails(id) {
   const [game, setGame] = useState(null);
@@ -6,7 +7,7 @@ export default function useGameDetails(id) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!id) return;
+    if (!id) return undefined;
 
     const controller = new AbortController();
 
@@ -15,13 +16,7 @@ export default function useGameDetails(id) {
       setError(null);
 
       try {
-        const response = await fetch(`/api/games/${id}`, { signal: controller.signal });
-        const data = await response.json();
-
-        if (!response.ok || data?.error) {
-          throw new Error(data?.error || 'Unable to fetch game details.');
-        }
-
+        const data = await rawgFetch(`/games/${encodeURIComponent(id)}`, {}, { signal: controller.signal });
         setGame(data);
       } catch (err) {
         if (err.name !== 'AbortError') setError(err.message);

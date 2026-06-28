@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { FiCalendar, FiClock, FiDatabase, FiFilter, FiRefreshCcw, FiSearch, FiSliders, FiStar, FiZap } from 'react-icons/fi';
-import { buildImageFallback } from '../../lib/rawg';
+import { buildImageFallback, fetchCollection } from '../../lib/rawg';
 import { clearRedcoreCache, createGamesCacheKey, getCacheStats, readCache, readSearchHistory, saveSearchTerm, writeCache } from '../../lib/gameCache';
 import useDebouncedValue from '../../lib/useDebouncedValue';
 import { useAppSettings } from '../components/AppProviders';
@@ -43,18 +43,21 @@ function normalizeDateRange(filters) {
   return from > to ? `${to},${from}` : `${from},${to}`;
 }
 
-function buildQuery(filters) {
-  const params = new URLSearchParams({
-    sName: filters.sName || '', sDates: filters.sDates || normalizeDateRange(filters), sOrdering: filters.sOrdering || '-rating', sPage: String(filters.sPage || 1), sPageSize: String(filters.sPageSize || 16), sGenres: filters.sGenres || '', sPlatforms: filters.sPlatforms || '', sMetacritic: filters.sMetacritic || '',
-  });
-  return params.toString();
-}
-
 async function requestGames(filters, signal, fallbackMessage) {
-  const response = await fetch(`/api/games?${buildQuery(filters)}`, { signal });
-  const data = await response.json();
-  if (!response.ok || data?.error) throw new Error(data?.error || fallbackMessage);
-  return Array.isArray(data) ? data : [];
+  try {
+    return await fetchCollection('/games', {
+      search: filters.sName || '',
+      dates: filters.sDates || normalizeDateRange(filters),
+      ordering: filters.sOrdering || '-rating',
+      page: String(filters.sPage || 1),
+      page_size: String(filters.sPageSize || 16),
+      genres: filters.sGenres || '',
+      platforms: filters.sPlatforms || '',
+      metacritic: filters.sMetacritic || '',
+    }, { signal });
+  } catch (error) {
+    throw new Error(error.message || fallbackMessage);
+  }
 }
 
 export default function GamesPage() {
@@ -171,7 +174,7 @@ export default function GamesPage() {
         {loading && <p className="text-center text-lg font-bold text-smoke">{t('games.loadingGames')}</p>}
         {error && <p className="rounded-2xl border border-crimson/30 bg-crimson/10 p-5 text-center font-semibold text-ember">{error}</p>}
         {!loading && !error && games.length === 0 && <p className="text-center text-lg font-bold text-smoke">{t('games.noResults')}</p>}
-        <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{games.map((game) => { const cover = game.background_image || buildImageFallback(game.name); const genres = game.genres?.slice(0, 2).map((genre) => genre.name).join(' • '); const platforms = game.parent_platforms?.slice(0, 3).map((item) => item.platform.name).join(', '); return <Link key={game.id} href={`/games/${game.id}`} className="card-clickable card-pro group" aria-label={`${t('games.details')} ${game.name}`}><div className="h-64 bg-cover bg-center transition duration-700 ease-out group-hover:scale-110" style={{ backgroundImage: `linear-gradient(to top, rgba(5,5,5,.95), rgba(5,5,5,.08)), url(${cover})` }} /><div className="p-6"><div className="mb-3 flex items-center justify-between gap-3"><span className="rounded-full bg-crimson/15 px-3 py-1 text-xs font-black uppercase text-ember transition duration-500 group-hover:bg-crimson group-hover:text-white">{genres || t('common.game')}</span><span className="flex items-center gap-1 text-sm font-black text-crimson"><FiStar /> {game.rating || '—'}</span></div><h2 className="line-clamp-2 min-h-16 text-2xl font-black text-frost transition duration-500 group-hover:text-crimson">{game.name}</h2><p className="mt-2 text-sm font-semibold text-smoke">{t('games.released')}: <span className="text-ash">{game.released || t('common.notInformed')}</span></p><div className="expand-card-details"><div><p className="line-clamp-2 rounded-2xl border border-white/10 bg-white/5 p-3 text-sm font-semibold text-smoke">{t('games.platforms')}: <span className="text-ash">{platforms || t('common.notInformed')}</span></p><p className="mt-3 text-xs font-black uppercase tracking-[0.22em] text-crimson">{t('games.details')}</p></div></div></div></Link>; })}</div>
+        <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{games.map((game) => { const cover = game.background_image || buildImageFallback(game.name); const genres = game.genres?.slice(0, 2).map((genre) => genre.name).join(' • '); const platforms = game.parent_platforms?.slice(0, 3).map((item) => item.platform.name).join(', '); return <Link key={game.id} href={`/game?id=${encodeURIComponent(String(game.id))}`} className="card-clickable card-pro group" aria-label={`${t('games.details')} ${game.name}`}><div className="h-64 bg-cover bg-center transition duration-700 ease-out group-hover:scale-110" style={{ backgroundImage: `linear-gradient(to top, rgba(5,5,5,.95), rgba(5,5,5,.08)), url(${cover})` }} /><div className="p-6"><div className="mb-3 flex items-center justify-between gap-3"><span className="rounded-full bg-crimson/15 px-3 py-1 text-xs font-black uppercase text-ember transition duration-500 group-hover:bg-crimson group-hover:text-white">{genres || t('common.game')}</span><span className="flex items-center gap-1 text-sm font-black text-crimson"><FiStar /> {game.rating || '—'}</span></div><h2 className="line-clamp-2 min-h-16 text-2xl font-black text-frost transition duration-500 group-hover:text-crimson">{game.name}</h2><p className="mt-2 text-sm font-semibold text-smoke">{t('games.released')}: <span className="text-ash">{game.released || t('common.notInformed')}</span></p><div className="expand-card-details"><div><p className="line-clamp-2 rounded-2xl border border-white/10 bg-white/5 p-3 text-sm font-semibold text-smoke">{t('games.platforms')}: <span className="text-ash">{platforms || t('common.notInformed')}</span></p><p className="mt-3 text-xs font-black uppercase tracking-[0.22em] text-crimson">{t('games.details')}</p></div></div></div></Link>; })}</div>
         <div className="mt-10 flex items-center justify-center gap-3"><button onClick={previousPage} disabled={Number(draftFilters.sPage) === 1 || loading} className="btn-secondary disabled:cursor-not-allowed disabled:opacity-40">{t('games.previous')}</button><button onClick={nextPage} disabled={loading || games.length === 0} className="btn-primary disabled:cursor-not-allowed disabled:opacity-40">{t('games.next')}</button></div>
       </section>
     </div>

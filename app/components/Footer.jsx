@@ -23,6 +23,18 @@ export default function Footer() {
           </Link>
           .
         </p>
+        <p className="text-xs text-smoke">
+          Dados e imagens de jogos fornecidos por{' '}
+          <a
+            href="https://rawg.io/apidocs"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-bold text-crimson underline-offset-4 transition hover:text-ember hover:underline"
+          >
+            RAWG Video Games Database
+          </a>
+          .
+        </p>
       </div>
     </footer>
   );

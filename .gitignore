@@ -26,3 +26,7 @@ pnpm-debug.log*
 .DS_Store
 .vscode/
 .idea/
+
+# GitHub Pages / local environment
+.env.local
+out/

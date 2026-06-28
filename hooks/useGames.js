@@ -1,11 +1,23 @@
 import { useEffect, useMemo, useState } from 'react';
+import { fetchCollection } from '../lib/rawg';
 
 export default function useGames(filters = {}) {
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const queryString = useMemo(() => new URLSearchParams(filters).toString(), [filters]);
+  const requestParams = useMemo(() => ({
+    search: filters.sName || '',
+    dates: filters.sDates || '1900-01-01,9999-12-31',
+    ordering: filters.sOrdering || '-rating',
+    page: String(filters.sPage || 1),
+    page_size: String(filters.sPageSize || 16),
+    genres: filters.sGenres || '',
+    platforms: filters.sPlatforms || '',
+    metacritic: filters.sMetacritic || '',
+  }), [filters]);
+
+  const requestKey = useMemo(() => new URLSearchParams(requestParams).toString(), [requestParams]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -15,14 +27,8 @@ export default function useGames(filters = {}) {
       setError(null);
 
       try {
-        const response = await fetch(`/api/games?${queryString}`, { signal: controller.signal });
-        const data = await response.json();
-
-        if (!response.ok || data?.error) {
-          throw new Error(data?.error || 'Unable to fetch games.');
-        }
-
-        setGames(Array.isArray(data) ? data : []);
+        const data = await fetchCollection('/games', requestParams, { signal: controller.signal });
+        setGames(data);
       } catch (err) {
         if (err.name !== 'AbortError') {
           setError(err.message);
@@ -35,7 +41,7 @@ export default function useGames(filters = {}) {
 
     loadGames();
     return () => controller.abort();
-  }, [queryString]);
+  }, [requestKey, requestParams]);
 
   return { games, loading, error };
 }
